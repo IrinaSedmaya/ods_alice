@@ -4,22 +4,52 @@ from const import TIMES
 
 
 def date_to_week(data_value: pd.Series) -> pd.Series:
+    """
+    Определяет день недели
+
+    :param data_value: дата в формате день/месяц/год
+    :return: день недели
+    """
     return data_value.weekday()
 
 
 def month(data_value: pd.Series) -> pd.Series:
+    """
+    Определяет месяц
+
+    :param data_value: дата в формате день/месяц/год
+    :return: месяц
+    """
     return data_value.month
 
 
 def hour(data_value: pd.Series) -> pd.Series:
+    """
+    Определяет который час
+
+    :param data_value: время в формате час/минута/секунда
+    :return: час
+    """
     return data_value.hour
 
 
 def minute(data_value: pd.Series) -> pd.Series:
+    """
+    Определяет минуты
+
+    :param data_value: время в формате час/минута/секунда
+    :return: минуты
+    """
     return data_value.minute
 
 
 def preprocess_time(df: pd.DataFrame) -> pd.DataFrame:  # параметры для отсечения времени
+    """
+    Формирует новые признаки
+
+    :param df: признаки обучающей выборки
+    :return: датафрейм с одиннадцатью навыми признаками
+    """
     df['day_of_the_week'] = df['time1'].apply(date_to_week) + 1  # series or value from series?
     df['weekend'] = df['day_of_the_week'] > 5
     df['weekend'] = df['weekend'].astype(int)
@@ -37,4 +67,3 @@ def preprocess_time(df: pd.DataFrame) -> pd.DataFrame:  # параметры д�
     df['night'] = df['hour'] >= 19
     df[['morning', 'day', 'evening', 'night']] = df[['morning', 'day', 'evening', 'night']].astype(int)
     return df
-

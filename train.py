@@ -10,7 +10,7 @@ from src.preprocess_time import preprocess_time
 from src.unique_sites import unique_sites_search, unique_sites_insert
 from src.utils import cyclical, normalize
 
-# ко всему - аннотации типов, докстринги, парсинг аргументов, форматтер, ридми, гитигнор, скрипт для загрузки
+# ко всему - докстринги, парсинг аргументов, форматтер, ридми, гитигнор, скрипт для загрузки
 
 
 # вынести в функцию, смысловые блоки
@@ -43,4 +43,3 @@ x_train, x_test, y_train, y_test = train_test_split(all_train, train_target, tra
 y_pred = fit_predict(x_train, y_train, x_test)
 
 print(roc_auc_score(y_test, y_pred))
-
