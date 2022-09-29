@@ -10,11 +10,6 @@ from src.preprocess_time import preprocess_time
 from src.unique_sites import unique_sites_search, unique_sites_insert
 from src.utils import cyclical, normalize
 
-# ко всему - докстринги, парсинг аргументов, форматтер, ридми, гитигнор, скрипт для загрузки
-
-
-# вынести в функцию, смысловые блоки
-
 train = pd.read_csv(DATA_DIR / 'train.csv', index_col='session_id', parse_dates=TIMES).sort_values(by='time1')
 train_target = train['target']
 
@@ -29,11 +24,10 @@ train['session_time'] = normalize(train['session_time'])
 train = train.drop(columns=['day_of_the_week', 'num_of_month', 'hour', 'first_time', 'last_time', 'target'], axis=1)
 train = train.fillna(0).drop(columns=TIMES, axis=1)
 
-print(train.columns)
-
-# columns order
-train_times, train_days = train.loc[:, 'session_time': 'day_of_the_week_cos'], \
-                          train.loc[:, 'unique_sites_alice': 'weekend']
+train_times, train_days = train[['session_time', 'morning', 'day', 'evening', 'night',
+                                 'num_of_month_sin', 'num_of_month_cos', 'hour_sin', 'hour_cos',
+                                 'day_of_the_week_sin', 'day_of_the_week_cos']], \
+                          train[['unique_sites_alice', 'unique_sites_other', 'weekend']]
 
 all_train = create_matrix(train[SITES], train_days, train_times)
 

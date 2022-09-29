@@ -43,15 +43,19 @@ def minute(data_value: pd.Series) -> pd.Series:
     return data_value.minute
 
 
-def preprocess_time(df: pd.DataFrame) -> pd.DataFrame:  # параметры для отсечения времени
+def preprocess_time(df: pd.DataFrame, friday=5, midday=12, evening_time=16, night_time=19) -> pd.DataFrame:
     """
     Формирует новые признаки
 
     :param df: признаки обучающей выборки
-    :return: датафрейм с одиннадцатью навыми признаками
+    :param friday: пятый день недели, отсекающий выходные
+    :param midday: отсекает утренние часы
+    :param evening_time: отсекает верние часы
+    :param night_time: отсекает ночные часы
+    :return: датафрейм с одиннадцатью новыми признаками
     """
     df['day_of_the_week'] = df['time1'].apply(date_to_week) + 1  # series or value from series?
-    df['weekend'] = df['day_of_the_week'] > 5
+    df['weekend'] = df['day_of_the_week'] > friday
     df['weekend'] = df['weekend'].astype(int)
 
     df['num_of_month'] = df['time1'].apply(month)
@@ -61,9 +65,9 @@ def preprocess_time(df: pd.DataFrame) -> pd.DataFrame:  # параметры д�
     df['last_time'] = df[TIMES].max(axis=1)
     df['session_time'] = (df['last_time'] - df['first_time']).dt.seconds
 
-    df['morning'] = df['hour'] < 12
-    df['day'] = (df['hour'] >= 12) & (df['hour'] < 16)
-    df['evening'] = (df['hour'] >= 16) & (df['hour'] < 19)
-    df['night'] = df['hour'] >= 19
+    df['morning'] = df['hour'] < midday
+    df['day'] = (df['hour'] >= midday) & (df['hour'] < evening_time)
+    df['evening'] = (df['hour'] >= evening_time) & (df['hour'] < night_time)
+    df['night'] = df['hour'] >= night_time
     df[['morning', 'day', 'evening', 'night']] = df[['morning', 'day', 'evening', 'night']].astype(int)
     return df
