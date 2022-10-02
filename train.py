@@ -3,8 +3,8 @@ import pandas as pd
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
 
-from const import DATA_DIR, SITES, TIMES
-from src.fit_pred import fit_predict
+from const import DATA_DIR, SITES, TIMES, RANDOM_STATE
+from src.fit_predict import fit_predict
 from src.matrix import create_matrix
 from src.preprocess_time import preprocess_time
 from src.unique_sites import unique_sites_search, unique_sites_insert
@@ -31,7 +31,7 @@ train_times, train_days = train[['session_time', 'morning', 'day', 'evening', 'n
 
 all_train = create_matrix(train[SITES], train_days, train_times)
 
-x_train, x_test, y_train, y_test = train_test_split(all_train, train_target, train_size=0.9, random_state=1)
+x_train, x_test, y_train, y_test = train_test_split(all_train, train_target, train_size=0.9, random_state=RANDOM_STATE)
 # отделять раньше - отдельным скриптом
 
 y_pred = fit_predict(x_train, y_train, x_test)

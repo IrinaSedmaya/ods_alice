@@ -14,10 +14,10 @@ def unique_sites_search(df: pd.DataFrame) -> Tuple[Set[int], Set[int]]:
     """
     unique_sites_alice = set()
     unique_sites_other = set()
-    for i in range(1, 11):  # использовать константу
-        unique_sites_alice |= set(df[df['target'] == 1][f'site{i}'])
-    for i in range(1, 11):
-        unique_sites_other |= set(df[df['target'] == 0][f'site{i}'])
+    for i in SITES:  # использовать константу
+        unique_sites_alice |= set(df[df['target'] == 1][i])
+    for i in SITES:
+        unique_sites_other |= set(df[df['target'] == 0][i])
 
     unique_sites_alice, unique_sites_other = (
         unique_sites_alice - unique_sites_other, unique_sites_other - unique_sites_alice
