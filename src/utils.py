@@ -1,6 +1,5 @@
 import pandas as pd
 from feature_engine.creation import CyclicalTransformer
-cyclical_transformer = CyclicalTransformer(variables=None, drop_original=True)  # внести в функцию
 
 
 def cyclical(df: pd.DataFrame) -> pd.DataFrame:
@@ -10,6 +9,7 @@ def cyclical(df: pd.DataFrame) -> pd.DataFrame:
     :param df: признаки обучающей выборки
     :return: датафрейм
     """
+    cyclical_transformer = CyclicalTransformer(variables=None, drop_original=True)
     return cyclical_transformer.fit_transform(df)
 
 

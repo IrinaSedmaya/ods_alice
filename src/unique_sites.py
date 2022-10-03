@@ -36,7 +36,6 @@ def unique_sites_insert(df: pd.DataFrame, unique_sites_alice: Set[int], unique_s
     """
     df['unique_sites_alice'] = 0
     df['unique_sites_other'] = 0
-    df.loc[df[SITES].isin(unique_sites_alice).any(axis=1), 'unique_sites_alice'] = 1  # any
-    df.loc[df[SITES].isin(unique_sites_other).any(axis=1), 'unique_sites_other'] = 1  # any
-    # np.where
+    df.loc[df[SITES].isin(unique_sites_alice).any(axis=1), 'unique_sites_alice'] = 1
+    df.loc[df[SITES].isin(unique_sites_other).any(axis=1), 'unique_sites_other'] = 1
     return df
