@@ -3,15 +3,15 @@ from scipy.sparse import csr_matrix
 from sklearn.linear_model import LogisticRegression
 from const import RANDOM_STATE
 
+def fit(x_train: csr_matrix, y_train: pd.Series, params: dict) -> LogisticRegression:
+    return LogisticRegression(random_state=RANDOM_STATE, n_jobs=-1, **params).fit(x_train, y_train)
 
-def fit_predict(x_train: csr_matrix, y_train: pd.Series, x_test: csr_matrix) -> pd.Series:
+
+def predict(model: LogisticRegression, x_test: csr_matrix) -> pd.Series:
     """
-    Создаёт модель логистической регрессии и делает предсказание
+    Делает предсказание
 
-    :param x_train: признаки обучающей выборки
-    :param y_train: ответы к обучающей выборке
     :param x_test: признаки тестовой выборки
     :return: вероятности класса 1 для тестовой выборки
     """
-    lr = LogisticRegression(random_state=RANDOM_STATE, max_iter=500, C=0.71, n_jobs=-1).fit(x_train, y_train)
-    return lr.predict_proba(x_test)[:, 1]
+    return model.predict_proba(x_test)[:, 1]
