@@ -3,6 +3,4 @@
 
 Задачу классафикации было предложено решить методом логистической регрессии.
 
-# EDA
-
-https://colab.research.google.com/drive/1hjF61EmIPzVl4JD4ZceJFYPdmMAzBIgF?usp=sharing
+[**EDA**](https://colab.research.google.com/drive/1hjF61EmIPzVl4JD4ZceJFYPdmMAzBIgF?usp=sharing)
